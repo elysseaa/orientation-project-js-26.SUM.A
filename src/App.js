@@ -1,16 +1,19 @@
 import { useState } from "react";
 import "./App.css";
 import Experience from "./experience";
+import PersonalInfo from "./personalInfo";
 
 function App() {
   const [page, setPage] = useState("home");
   const [experiences, setExperiences] = useState([]);
 
-  const handleSaveExperience = (exp) => {
-    setExperiences([...experiences, exp]);
-  };
-
-  if (page === "experience") {
+  if (page === "personal-info") {
+    return (
+      <div className="App">
+        <PersonalInfo onBack={() => setPage("home")} />
+      </div>
+    );
+  } else if (page === "experience") {
     return (
       <div className="App">
         <Experience
@@ -24,6 +27,14 @@ function App() {
   return (
     <div className="App">
       <h1>Resume Builder</h1>
+      <div className="resumeSection">
+        <h2>Personal Info</h2>
+        <p>Personal Info Placeholder</p>
+        <button onClick={() => setPage("personal-info")}>
+          Add Personal Info
+        </button>
+        <br></br>
+      </div>
       <div className="resumeSection">
         <h2>Experience</h2>
         {experiences.length === 0 ? (
