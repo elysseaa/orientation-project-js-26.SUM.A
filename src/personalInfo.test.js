@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import PersonalInfo from "./personalInfo";
 
 // simulates GET call that returns no existing record
-beforeEach(() => { 
+beforeEach(() => {
   global.fetch = jest.fn(() =>
     Promise.resolve({
       ok: true,
@@ -61,9 +61,7 @@ test("shows phone format error for invalid phone number", async () => {
   fireEvent.click(screen.getByText(/Save/i));
 
   await waitFor(() => {
-    expect(
-      screen.getByText(/international country code/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/international country code/i)).toBeInTheDocument();
   });
 });
 
@@ -106,7 +104,8 @@ test("submits form data with POST for a new record", async () => {
 
 // check POST request with valid data upon existing record save
 test("pre-populates form and submits with PUT for an existing record", async () => {
-  global.fetch = jest.fn()
+  global.fetch = jest
+    .fn()
     .mockResolvedValueOnce({
       ok: true,
       json: () =>
