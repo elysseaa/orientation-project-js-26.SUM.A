@@ -1,8 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import App from "./App";
 
-test("renders learn react link", () => {
+test("renders Resume Builder header", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const headerElement = screen.getByText(/Resume Builder/i);
+  expect(headerElement).toBeInTheDocument();
+});
+
+test("can navigate to Add Experience page and back", () => {
+  render(<App />);
+  const addBtn = screen.getByText(/Add Experience/i);
+  fireEvent.click(addBtn);
+
+  expect(
+    screen.getByText(/Add Experience/i, { selector: "h2" })
+  ).toBeInTheDocument();
+
+  const cancelBtn = screen.getByText(/Cancel/i);
+  fireEvent.click(cancelBtn);
+
+  expect(screen.getByText(/Resume Builder/i)).toBeInTheDocument();
 });
