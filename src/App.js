@@ -7,6 +7,10 @@ function App() {
   const [page, setPage] = useState("home");
   const [experiences, setExperiences] = useState([]);
 
+  const handleSaveExperience = (exp) => {
+    setExperiences([...experiences, exp]);
+  };
+
   if (page === "personal-info") {
     return (
       <div className="App">
