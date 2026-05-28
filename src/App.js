@@ -1,13 +1,19 @@
 import { useState } from "react";
 import "./App.css";
 import Experience from "./experience";
+import Education from "./education";
 
 function App() {
   const [page, setPage] = useState("home");
   const [experiences, setExperiences] = useState([]);
+  const [educations, setEducations] = useState([]);
 
   const handleSaveExperience = (exp) => {
     setExperiences([...experiences, exp]);
+  };
+
+  const handleSaveEducation = (edu) => {
+    setEducations([...educations, edu]);
   };
 
   if (page === "experience") {
@@ -16,6 +22,15 @@ function App() {
         <Experience
           onBack={() => setPage("home")}
           onSave={handleSaveExperience}
+        />
+      </div>
+    );
+  } else if (page === "education") {
+    return (
+      <div className="App">
+        <Education
+          onBack={() => setPage("home")}
+          onSave={handleSaveEducation}
         />
       </div>
     );
@@ -56,8 +71,30 @@ function App() {
       </div>
       <div className="resumeSection">
         <h2>Education</h2>
-        <p>Education Placeholder</p>
-        <button>Add Education</button>
+        {educations.length === 0 ? (
+          <p>Education Placeholder</p>
+        ) : (
+          educations.map((edu) => (
+            <div key={edu.id} className="entry">
+              {edu.logo && (
+                <img
+                  src={edu.logo}
+                  alt={`${edu.school} logo`}
+                  style={{
+                    maxWidth: "50px",
+                    float: "left",
+                    marginRight: "10px",
+                  }}
+                />
+              )}
+              <strong>{edu.course}</strong> at {edu.school}
+              <br />
+              {edu.start_date} – {edu.end_date}
+              {edu.grade && <p style={{ clear: "both" }}>Grade: {edu.grade}</p>}
+            </div>
+          ))
+        )}
+        <button onClick={() => setPage("education")}>Add Education</button>
         <br></br>
       </div>
       <div className="resumeSection">
