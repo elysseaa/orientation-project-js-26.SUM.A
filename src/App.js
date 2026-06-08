@@ -1,14 +1,20 @@
 import { useState } from "react";
 import "./App.css";
 import Experience from "./experience";
+import Skill from "./skill";
 import PersonalInfo from "./personalInfo";
 
 function App() {
   const [page, setPage] = useState("home");
   const [experiences, setExperiences] = useState([]);
+  const [skills, setSkills] = useState([]);
 
   const handleSaveExperience = (exp) => {
     setExperiences([...experiences, exp]);
+  };
+
+  const handleSaveSkill = (skill) => {
+    setSkills([...skills, skill]);
   };
 
   if (page === "personal-info") {
@@ -24,6 +30,12 @@ function App() {
           onBack={() => setPage("home")}
           onSave={handleSaveExperience}
         />
+      </div>
+    );
+  } else if (page === "skill") {
+    return (
+      <div className="App">
+        <Skill onBack={() => setPage("home")} onSave={handleSaveSkill} />
       </div>
     );
   }
@@ -77,8 +89,29 @@ function App() {
       </div>
       <div className="resumeSection">
         <h2>Skills</h2>
-        <p>Skill Placeholder</p>
-        <button>Add Skill</button>
+        {skills.length === 0 ? (
+          <p>Skill Placeholder</p>
+        ) : (
+          skills.map((skill) => (
+            <div key={skill.id} className="entry">
+              {skill.logo && (
+                <img
+                  src={skill.logo}
+                  alt={`${skill.name} logo`}
+                  style={{
+                    maxWidth: "50px",
+                    float: "left",
+                    marginRight: "10px",
+                  }}
+                />
+              )}
+              <strong>{skill.name}</strong>
+              <br />
+              {skill.proficiency}
+            </div>
+          ))
+        )}
+        <button onClick={() => setPage("skill")}>Add Skill</button>
         <br></br>
       </div>
       <br></br>
